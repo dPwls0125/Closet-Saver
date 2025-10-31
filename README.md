@@ -59,5 +59,6 @@ MVP 개발팀이 수동으로 검색 엔진 및 알림 시스템의 역할을 �
 
 <img width="681" height="231" alt="스크린샷 2025-10-30 오후 7 42 55" src="https://github.com/user-attachments/assets/7cbef90e-8ed4-49e9-8131-900859ab0445" />
 
-
+### Clothes Database 
+https://prairie-actress-d8c.notion.site/Closet-Saver-MVP-Database-29c797856dad8014b0c5e9ffce9be45d?pvs=73
 
