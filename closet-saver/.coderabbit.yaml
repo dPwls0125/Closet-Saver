@@ -11,10 +11,13 @@ reviews:
 
   auto_title_placeholder: "@coderabbitai"
 
+
   auto_review:
     enabled: true
     drafts: false
-  # update to the tools you use, see full list: https://docs.coderabbit.ai/tools/list
+    base_branches:
+      - "feature/*"
+      # update to the tools you use, see full list: https://docs.coderabbit.ai/tools/list
   tools:
     eslint:
       enabled: true
