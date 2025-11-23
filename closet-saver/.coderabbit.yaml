@@ -12,7 +12,7 @@ reviews:
     gitleaks:
       enabled: true
 
-code_generation:
-  docstrings:
-    language: ko-KR
+language: "ko-KR"
+
+
 
