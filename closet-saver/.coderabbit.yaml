@@ -1,4 +1,6 @@
+language: "ko-KR"
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
 reviews:
   profile: chill
   high_level_summary: true
@@ -11,8 +13,6 @@ reviews:
       enabled: true
     gitleaks:
       enabled: true
-
-language: "ko-KR"
 
 
 
