@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "imageUrl": "/uploads/knit_white.jpg",
+    "color": "WHITE",
+    "category": "KNIT",
+    "season": "WINTER",
+    "material": "WOOL",
+    "style": "MINIMAL",
+    "embedding": [0.123, -0.442, ...]
+  },
+  {
+    "id": 2,
+    "imageUrl": "/uploads/outer_beige.jpg",
+    "color": "BEIGE",
+    "category": "OUTER",
+    "season": "FALL",
+    "material": "COTTON",
+    "style": "CLASSIC",
+    "embedding": [-0.221, 0.344, ...]
+  }
+]
