@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+Pillow
+torch
+torchvision
+torchaudio
+git+https://github.com/openai/CLIP.git
