@@ -1,7 +1,6 @@
 spring:
   config:
     import: optional:file:.env[.properties]
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:${MYSQL_PORT}/closet_saver?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -12,3 +11,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+
+openai:
+  key: ${OPENAI_KEY}
+
+
