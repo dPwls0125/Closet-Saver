@@ -1,7 +1,10 @@
 package com.cholog_ai.closet_saver.domain.embedding.model.vo;
 import lombok.Builder;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
+
 public class EmbeddingValue {
     private final double[] vector;
     private final EmbeddingType type;
@@ -62,5 +65,19 @@ public class EmbeddingValue {
                             ", actual=" + vector.length
             );
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmbeddingValue that)) return false;
+        return Arrays.equals(getVector(), that.getVector()) && getType() == that.getType();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(getType());
+        result = 31 * result + Arrays.hashCode(getVector());
+        return result;
     }
 }
