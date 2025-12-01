@@ -12,6 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class TextEmbeddingServiceE2ETest {
 
+
+    // Todo : 후에 unit test용 EmbeddingConfig 구현체를 구현하면 빈충돌이 발생하므로 test용 config 분리 등록하기
     @Autowired
     private TextEmbeddingService textEmbeddingService;
 
