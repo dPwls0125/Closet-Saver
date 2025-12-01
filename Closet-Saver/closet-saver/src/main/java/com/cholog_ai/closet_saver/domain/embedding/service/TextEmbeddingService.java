@@ -1,6 +1,8 @@
 package com.cholog_ai.closet_saver.domain.embedding.service;
 
 import com.cholog_ai.closet_saver.domain.embedding.model.dto.EmbeddingResponse;
+import com.cholog_ai.closet_saver.domain.embedding.model.vo.EmbeddingType;
+import com.cholog_ai.closet_saver.domain.embedding.model.vo.EmbeddingValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +17,6 @@ import java.util.Map;
 @Service
 @Slf4j
 public class TextEmbeddingService {
-
 
     // TODO : unit, 통합 test 작성
     private static final String EMBEDDING_URL = "https://api.openai.com/v1/embeddings";
@@ -33,10 +34,9 @@ public class TextEmbeddingService {
     /*
     * 텍스트를 OpenAI 임베딩 API를 사용해서 double 배열로 변환함.
      */
-    public double[] embedText(String text){
+    public EmbeddingValue embedText(String text){
         try {
             String requestJson = buildRequestJson(text);
-
             RequestBody body = RequestBody.create(
                     requestJson,
                     MediaType.parse("application/json")
@@ -51,7 +51,6 @@ public class TextEmbeddingService {
             Response response = client.newCall(request).execute();
             String responseBody = response.body().string();
 
-
             if (!response.isSuccessful()) {
                 log.error("OpenAI Embedding API Error: {}", responseBody);
                 throw new RuntimeException("Embedding API 호출 실패"); // Todo : Exception, error code 커스텀
@@ -60,9 +59,10 @@ public class TextEmbeddingService {
             EmbeddingResponse embeddingResponse = mapper.readValue(responseBody, EmbeddingResponse.class);
             List<Double> embeddingList = embeddingResponse.getData().get(0).getEmbedding();
 
-            return embeddingList.stream()
-                    .mapToDouble(Double::doubleValue)
-                    .toArray();
+            return EmbeddingValue.builder()
+                    .vector(embeddingList.stream().mapToDouble(Double::doubleValue).toArray())
+                    .type(EmbeddingType.TEXT)
+                    .build();
 
         } catch(Exception e){
             log.error("텍스트 임베딩 실패: {}", e.getMessage());
