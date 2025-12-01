@@ -1,5 +1,6 @@
 package com.cholog_ai.closet_saver.domain.embedding.service;
 
+import com.cholog_ai.closet_saver.domain.embedding.config.EmbeddingModelConfig;
 import com.cholog_ai.closet_saver.domain.embedding.model.dto.EmbeddingResponse;
 import com.cholog_ai.closet_saver.domain.embedding.model.vo.EmbeddingType;
 import com.cholog_ai.closet_saver.domain.embedding.model.vo.EmbeddingValue;
@@ -7,7 +8,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -19,18 +19,19 @@ import java.util.Map;
 public class TextEmbeddingService {
 
     // TODO : unit, 통합 test 작성
-    private static final String EMBEDDING_URL = "https://api.openai.com/v1/embeddings";
+    private final String EMBEDDING_URL;
     // small : 1536, large : 3072
-    private static final String MODEL_NAME = "text-embedding-3-small";
-
-    @Value("${openai.key}")
-    private String API_KEY;
+    private final String API_KEY;
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
-    private static final Map<String,Object> BASE_BODY = Map.of(
-            "model",MODEL_NAME,
-            "encoding_format","float"
-            );
+    private static final Map<String,Object> BASE_BODY = new HashMap<>();
+
+    public TextEmbeddingService(EmbeddingModelConfig config){
+        EMBEDDING_URL = config.getUrl();
+        API_KEY = config.getKey();
+        BASE_BODY.put("model",config.getModelName());
+        BASE_BODY.put("encoding_format",config.getEncodingFormat());
+    }
     /*
     * 텍스트를 OpenAI 임베딩 API를 사용해서 double 배열로 변환함.
      */
@@ -44,7 +45,7 @@ public class TextEmbeddingService {
 
             Request request = new Request.Builder()
                     .url(EMBEDDING_URL)
-                    .header("Authorization", "Bearer" + API_KEY)
+                    .header("Authorization", "Bearer " + API_KEY)
                     .post(body)
                     .build();
 
