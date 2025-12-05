@@ -16,7 +16,6 @@ reviews:
     base_branches:
         - "main"
         - "develop"
-        - "feature/**"
 
 
   # update to the tools you use, see full list: https://docs.coderabbit.ai/tools/list
