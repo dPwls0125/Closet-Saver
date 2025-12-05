@@ -18,11 +18,11 @@ public class ImageEmbeddingService {
 
     @Value("${embedding.image.url}")
     private String imageEmbeddingUrl;
-
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
 
     public EmbeddingValue embeddingImage(MultipartFile file){
+
         try{
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -46,9 +46,10 @@ public class ImageEmbeddingService {
                 throw new RuntimeException("Image Embedding API 호출 실패");
             }
 
-            String responseBody = response.body().toString();
+            String responseBody = response.body().string();
 
             ImageEmbeddingResponse dto = mapper.readValue(responseBody, ImageEmbeddingResponse.class);
+
             double[] vector = dto.embeddingVector().stream()
                     .mapToDouble(Double::doubleValue)
                     .toArray();
@@ -56,7 +57,7 @@ public class ImageEmbeddingService {
             return new EmbeddingValue(vector, EmbeddingType.IMAGE);
 
         }catch (Exception e){
-            log.error("이미지 임베딩 처리 실패");
+            log.error(e.getMessage());
             throw new RuntimeException("이미지 임베딩 중 오류 발생",e);
         }
     }
