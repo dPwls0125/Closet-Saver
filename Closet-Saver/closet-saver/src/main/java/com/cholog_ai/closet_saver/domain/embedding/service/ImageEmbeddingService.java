@@ -15,9 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Slf4j
 public class ImageEmbeddingService {
-
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
+
     @Value("${embedding.image.url}")
     private String imageEmbeddingUrl;
 
