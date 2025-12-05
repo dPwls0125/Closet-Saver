@@ -16,14 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class ImageEmbeddingService {
 
-    @Value("${embedding.image.url}")
-    private String imageEmbeddingUrl;
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
+    @Value("${embedding.image.url}")
+    private String imageEmbeddingUrl;
 
-    public EmbeddingValue embeddingImage(MultipartFile file){
+    public EmbeddingValue embeddingImage(MultipartFile file) {
 
-        try{
+        try {
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart(
@@ -38,10 +38,9 @@ public class ImageEmbeddingService {
                     .post(requestBody)
                     .build();
 
-
             Response response = client.newCall(request).execute();
 
-            if(!response.isSuccessful()){
+            if (!response.isSuccessful()) {
                 log.error("이미지 임베딩에 실패하였습니다.");
                 throw new RuntimeException("Image Embedding API 호출 실패");
             }
@@ -56,9 +55,9 @@ public class ImageEmbeddingService {
 
             return new EmbeddingValue(vector, EmbeddingType.IMAGE);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
-            throw new RuntimeException("이미지 임베딩 중 오류 발생",e);
+            throw new RuntimeException("이미지 임베딩 중 오류 발생", e);
         }
     }
 }
