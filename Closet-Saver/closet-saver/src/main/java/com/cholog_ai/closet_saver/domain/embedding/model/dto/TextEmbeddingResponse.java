@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EmbeddingResponse {
+public class TextEmbeddingResponse {
 
     private List<EmbeddingData> data;
 

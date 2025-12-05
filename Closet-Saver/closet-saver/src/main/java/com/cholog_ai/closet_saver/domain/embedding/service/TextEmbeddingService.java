@@ -1,7 +1,7 @@
 package com.cholog_ai.closet_saver.domain.embedding.service;
 
 import com.cholog_ai.closet_saver.domain.embedding.config.EmbeddingModelConfig;
-import com.cholog_ai.closet_saver.domain.embedding.model.dto.EmbeddingResponse;
+import com.cholog_ai.closet_saver.domain.embedding.model.dto.TextEmbeddingResponse;
 import com.cholog_ai.closet_saver.domain.embedding.model.vo.EmbeddingType;
 import com.cholog_ai.closet_saver.domain.embedding.model.vo.EmbeddingValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,6 +32,7 @@ public class TextEmbeddingService {
         BASE_BODY.put("model",config.getModelName());
         BASE_BODY.put("encoding_format",config.getEncodingFormat());
     }
+
     /*
     * 텍스트를 OpenAI 임베딩 API를 사용해서 double 배열로 변환함.
      */
@@ -57,8 +58,8 @@ public class TextEmbeddingService {
                 throw new RuntimeException("Embedding API 호출 실패"); // Todo : Exception, error code 커스텀
             }
 
-            EmbeddingResponse embeddingResponse = mapper.readValue(responseBody, EmbeddingResponse.class);
-            List<Double> embeddingList = embeddingResponse.getData().get(0).getEmbedding();
+            TextEmbeddingResponse textEmbeddingResponse = mapper.readValue(responseBody, TextEmbeddingResponse.class);
+            List<Double> embeddingList = textEmbeddingResponse.getData().get(0).getEmbedding();
 
             return EmbeddingValue.builder()
                     .vector(embeddingList.stream().mapToDouble(Double::doubleValue).toArray())
