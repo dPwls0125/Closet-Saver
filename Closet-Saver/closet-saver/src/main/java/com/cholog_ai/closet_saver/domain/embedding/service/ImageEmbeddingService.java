@@ -4,22 +4,33 @@ import com.cholog_ai.closet_saver.domain.embedding.model.dto.ImageEmbeddingRespo
 import com.cholog_ai.closet_saver.domain.embedding.model.vo.EmbeddingType;
 import com.cholog_ai.closet_saver.domain.embedding.model.vo.EmbeddingValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Duration;
+
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class ImageEmbeddingService {
-    private final OkHttpClient client = new OkHttpClient();
-    private final ObjectMapper mapper = new ObjectMapper();
+
+    private final OkHttpClient client;
+    private final ObjectMapper mapper;
 
     @Value("${embedding.image.url}")
     private String imageEmbeddingUrl;
+
+    public ImageEmbeddingService(ObjectMapper mapper) {
+        this.mapper = mapper;
+        this.client = new OkHttpClient.Builder()
+                .connectTimeout(Duration.ofSeconds(5))
+                .readTimeout(Duration.ofSeconds(10))
+                .writeTimeout(Duration.ofSeconds(10))
+                .build();
+
+    }
 
     public EmbeddingValue embeddingImage(MultipartFile file) {
 
