@@ -12,8 +12,9 @@ spring:
       ddl-auto: update
     show-sql: true
 
-
 openai:
   key: ${OPENAI_KEY}
 
-
+embedding:
+  image:
+    url : ${IMAGE_EMBEDDING_URL}
