@@ -34,6 +34,8 @@ public class ImageEmbeddingService {
 
     public EmbeddingValue embeddingImage(MultipartFile file) {
 
+        validateInputMultiipartFile(file);
+
         try {
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -69,6 +71,18 @@ public class ImageEmbeddingService {
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException("이미지 임베딩 중 오류 발생", e);
+        }
+    }
+
+
+    private void validateInputMultiipartFile(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("파일이 null이거나 비어있습니다.");
+        }
+
+        String filename = file.getOriginalFilename();
+        if (filename.isBlank()) {
+            throw new IllegalArgumentException("파일명이 유효하지 않습니다.");
         }
     }
 }
